@@ -10,10 +10,21 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
-
+  format:
     runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    - name: Restore tools
+      run: dotnet tool restore
+    - name: Check format
+      run: dotnet tool run fantomas --check JsonParse/ JsonParse.Test/
 
+  test:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
