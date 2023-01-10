@@ -37,7 +37,8 @@ let private pStringLiteral =
     >>. manyStrings ((noneOf [ '"'; '\\' ] |>> string) <|> pEscape <|> pUnicodeEscape)
     .>> (pchar '"')
 
-let private pJsonValue, pJsonValueRef = createParserForwardedToRef<Value, unit> ()
+let private pJsonValue, private pJsonValueRef =
+    createParserForwardedToRef<Value, unit> ()
 
 let private pJsonTrue = stringReturn "true" Value.True
 let private pJsonFalse = stringReturn "false" Value.False
